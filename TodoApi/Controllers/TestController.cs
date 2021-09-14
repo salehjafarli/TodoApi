@@ -23,10 +23,10 @@ namespace TodoApi.Controllers
         [HttpGet]
         public IActionResult get()
         {
-            IEventRepository a = new EventRepository(context);
-            Event e = new Event {Id = 105, Name = "asd", Description = "asfasf", StartDate = DateTime.Now,EndDate = DateTime.Now.AddMinutes(20),isDeleted = false };
-            var x =  a.CreateEventAsync(e);
-            return Ok(x.Result);
+            //IEventRepository a = new EventRepository(context);
+            //Event e = new Event {Id = 105, Name = "asd", Description = "asfasf", StartDate = DateTime.Now,EndDate = DateTime.Now.AddMinutes(20),isDeleted = false };
+            //var x =  a.CreateEventAsync(e);
+            //return Ok(x.Result);
         }
     }
 }
