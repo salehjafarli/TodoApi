@@ -18,19 +18,37 @@ namespace BusinessLayer.Services.Concrete
         {
             this.repo = repo;
         }
-        public EventDto Create(EventDto evn)
+        public bool Create(EventDto evn)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var mapper = new AutoMapper<EventDto, Event>();
+                Event ev = mapper.Map(evn);
+                repo.EventRepository.CreateAsync(ev);
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            
         }
 
-        public EventDto Delete(EventDto evn)
+        public bool Delete(EventDto evn)
         {
-            throw new NotImplementedException();
+            var mapper =new AutoMapper<EventDto, Event>();
+            Event ev = mapper.Map(evn);
+            return repo.EventRepository.DeleteAsync(ev);
         }
 
-        public EventDto GetAll()
+        public List<EventDto> GetAll()
         {
-            throw new NotImplementedException();
+            var list = repo.EventRepository.GetAllAsync().Result;
+            var mapper = new AutoMapper<Event, EventDto>();
+            List<EventDto> res = list.Select(x => mapper.Map(x)).ToList();
+            return res;
+
         }
 
         public EventDto GetById(int id)
@@ -40,9 +58,21 @@ namespace BusinessLayer.Services.Concrete
             return mapper.Map(e);
         }
 
-        public EventDto Update(EventDto evn)
+        public bool Update(EventDto evn)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var mapper = new AutoMapper<EventDto, Event>();
+                Event ev = mapper.Map(evn);
+                repo.EventRepository.UpdateAsync(ev);
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            
         }
     }
 }

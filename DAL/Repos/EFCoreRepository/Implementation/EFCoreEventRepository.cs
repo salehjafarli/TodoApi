@@ -22,12 +22,22 @@ namespace DAL.Repos.EFCoreRepository.Implementation
             return Task.FromResult(x);
         }
 
-        public Task<Event> DeleteAsync(Event evn)
+        public bool DeleteAsync(Event evn)
         {
-            evn.isDeleted = true;
-            var x = UpdateAsync(evn);
-            dBContext.SaveChangesAsync();
-            return x;
+            try
+            {
+                evn.isDeleted = true;
+                var x = UpdateAsync(evn);
+                dBContext.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            
+            
         }
 
         public Task<List<Event>> GetAllAsync()

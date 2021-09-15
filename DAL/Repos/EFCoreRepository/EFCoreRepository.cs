@@ -19,9 +19,7 @@ namespace DAL.Repos.EFCoreRepository
         {
             this.dBContext = dBContext;
             
-             // var options = new DbContextOptionsBuilder<TodoDBContext>().UseNpgsql()
-
-             // dBContext = new TodoDBContext()
+             
         }
 
         public IEventRepository EventRepository => new EFCoreEventRepository(dBContext);

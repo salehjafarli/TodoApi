@@ -13,7 +13,7 @@ namespace DAL.Repos.Abstraction.Interfaces
         Task<List<Event>> GetAllAsync();
         Task<Event> CreateAsync(Event evn);
         Task<Event> UpdateAsync(Event evn);
-        Task<Event> DeleteAsync(Event evn);
+        bool DeleteAsync(Event evn);
 
 
 
