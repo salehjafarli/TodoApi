@@ -14,20 +14,28 @@ namespace DAL.Repos.EFCoreRepository.Implementation
         {
 
         }
-        public Task<Event> CreateAsync(Event evn)
-        {
-
-            var x = dBContext.Events.Add(evn).Entity;
-            dBContext.SaveChangesAsync();
-            return Task.FromResult(x);
-        }
-
-        public bool DeleteAsync(Event evn)
+        public bool CreateAsync(Event evn)
         {
             try
             {
-                evn.isDeleted = true;
-                var x = UpdateAsync(evn);
+                var x = dBContext.Events.Add(evn).Entity;
+                dBContext.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            
+        }
+
+        public bool DeleteAsync(int id)
+        {
+            try
+            {
+                Event e = dBContext.Events.FirstOrDefault(x => x.Id == id);
+                e.isDeleted = true;
                 dBContext.SaveChangesAsync();
                 return true;
             }
@@ -42,20 +50,28 @@ namespace DAL.Repos.EFCoreRepository.Implementation
 
         public Task<List<Event>> GetAllAsync()
         {
-            return Task.FromResult(dBContext.Events.ToList());
+            return Task.FromResult(dBContext.Events.Where(x => x.isDeleted == false).ToList());
         }
 
         public Task<Event> GetByIdAsync(int id)
         {
-            return Task.FromResult(dBContext.Events.FirstOrDefault());
+            return Task.FromResult(dBContext.Events.FirstOrDefault(x => x.Id == id && x.isDeleted == false));
         }
 
-        public Task<Event> UpdateAsync(Event evn)
+        public bool UpdateAsync(Event evn)
         {
-            Event e = dBContext.Events.FirstOrDefault(x => x.Id == evn.Id);
-            e = evn;
-            dBContext.SaveChangesAsync();
-            return Task.FromResult(e);
+            try
+            {
+                Event e = dBContext.Events.FirstOrDefault(x => x.Id == evn.Id);
+                dBContext.Entry(e).CurrentValues.SetValues(evn);
+                dBContext.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            
 
             
         }

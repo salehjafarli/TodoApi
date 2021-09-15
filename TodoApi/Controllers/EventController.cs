@@ -98,11 +98,11 @@ namespace TodoApi.Controllers
 
         [HttpPost]
         [Route("Delete")]
-        public HttpResponseMessage Delete(EventDto ev)
+        public HttpResponseMessage Delete(int id)
         {
             try
             {
-                var res = EventService.Delete(ev);
+                var res = EventService.Delete(id);
                 if (res == false)
                 {
                     return new HttpResponseMessage(System.Net.HttpStatusCode.NotFound);

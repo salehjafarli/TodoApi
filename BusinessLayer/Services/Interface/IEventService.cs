@@ -13,6 +13,6 @@ namespace BusinessLayer.Services.Interface
         List<EventDto> GetAll();
         bool Create(EventDto evn);
         bool Update(EventDto evn);
-        bool Delete(EventDto evn);
+        bool Delete(int id);
     }
 }

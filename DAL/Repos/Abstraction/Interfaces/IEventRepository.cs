@@ -11,9 +11,9 @@ namespace DAL.Repos.Abstraction.Interfaces
     {
         Task<Event> GetByIdAsync(int id);
         Task<List<Event>> GetAllAsync();
-        Task<Event> CreateAsync(Event evn);
-        Task<Event> UpdateAsync(Event evn);
-        bool DeleteAsync(Event evn);
+        bool  CreateAsync(Event evn);
+        bool UpdateAsync(Event evn);
+        bool DeleteAsync(int id);
 
 
 

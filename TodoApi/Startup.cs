@@ -18,6 +18,8 @@ using DAL.Repos.Abstraction;
 using DAL.Repos.EFCoreRepository;
 using BusinessLayer.Services.Interface;
 using BusinessLayer.Services.Concrete;
+using FluentValidation.AspNetCore;
+using BusinessLayer.Validators;
 
 namespace TodoApi
 {
@@ -38,7 +40,14 @@ namespace TodoApi
             //services.AddScoped<DbContext, TodoDBContext>();
             services.AddScoped<IRepository, EFCoreRepository>();
             services.AddScoped<IEventService, EventService>();
-            services.AddControllers();
+
+
+            services.AddControllers().AddFluentValidation(f => {
+                f.DisableDataAnnotationsValidation = true;
+                f.RegisterValidatorsFromAssemblyContaining<EventValidator>();
+                // add here if you have another validators
+
+            }); ;
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TodoApi", Version = "v1" });

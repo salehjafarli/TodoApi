@@ -24,8 +24,7 @@ namespace BusinessLayer.Services.Concrete
             {
                 var mapper = new AutoMapper<EventDto, Event>();
                 Event ev = mapper.Map(evn);
-                repo.EventRepository.CreateAsync(ev);
-                return true;
+                return repo.EventRepository.CreateAsync(ev);
             }
             catch (Exception)
             {
@@ -35,11 +34,9 @@ namespace BusinessLayer.Services.Concrete
             
         }
 
-        public bool Delete(EventDto evn)
+        public bool Delete(int id)
         {
-            var mapper =new AutoMapper<EventDto, Event>();
-            Event ev = mapper.Map(evn);
-            return repo.EventRepository.DeleteAsync(ev);
+            return repo.EventRepository.DeleteAsync(id);
         }
 
         public List<EventDto> GetAll()
@@ -64,8 +61,7 @@ namespace BusinessLayer.Services.Concrete
             {
                 var mapper = new AutoMapper<EventDto, Event>();
                 Event ev = mapper.Map(evn);
-                repo.EventRepository.UpdateAsync(ev);
-                return true;
+                return repo.EventRepository.UpdateAsync(ev);
             }
             catch (Exception)
             {
