@@ -9,6 +9,8 @@ using DAL.Repos.EFCoreRepository.Implementation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,14 +24,17 @@ namespace TodoApi.Controllers
     public class EventController : ControllerBase
     {
         public readonly IEventService EventService;
-        public EventController(IEventService service)
+        public readonly ILogger<EventController> logger;
+        public EventController(IEventService EventService, ILogger<EventController> logger)
         {
-            this.EventService = service;
+            this.EventService = EventService;
+            this.logger = logger;
         }
         [HttpGet]
         [Route("{id:int}")]
         public IActionResult get(int id)
         {
+            
             try
             {
                 var result = EventService.GetById(id);

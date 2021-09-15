@@ -20,6 +20,7 @@ using BusinessLayer.Services.Interface;
 using BusinessLayer.Services.Concrete;
 using FluentValidation.AspNetCore;
 using BusinessLayer.Validators;
+using Serilog;
 
 namespace TodoApi
 {
@@ -37,7 +38,6 @@ namespace TodoApi
         {
             services.AddDbContext<TodoDBContext>(opts =>
             opts.UseNpgsql(Configuration["ConnectionStrings:Context"]));
-            //services.AddScoped<DbContext, TodoDBContext>();
             services.AddScoped<IRepository, EFCoreRepository>();
             services.AddScoped<IEventService, EventService>();
 
@@ -67,7 +67,7 @@ namespace TodoApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseSerilogRequestLogging();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
