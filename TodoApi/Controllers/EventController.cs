@@ -32,12 +32,12 @@ namespace TodoApi.Controllers
         }
         [HttpGet]
         [Route("{id:int}")]
-        public IActionResult get(int id)
+        public async Task<IActionResult> get(int id)
         {
             
             try
             {
-                var result = EventService.GetById(id);
+                var result = await EventService.GetById(id);
                 return Ok(result);
             }
             catch (Exception e)
@@ -48,11 +48,11 @@ namespace TodoApi.Controllers
 
         }
         [HttpGet]
-        public IActionResult getall()
+        public async Task<IActionResult> getall()
         {
             try
             {
-                var result = EventService.GetAll();
+                var result = await EventService.GetAll();
                 return Ok(result);
             }
             catch (Exception e)
@@ -63,11 +63,11 @@ namespace TodoApi.Controllers
         }
         [HttpPost]
         [Route("Create")]
-        public HttpResponseMessage Create(EventDto ev)
+        public async Task<HttpResponseMessage> Create(EventDto ev)
         {
             try
             {
-                var res = EventService.Create(ev);
+                var res =await EventService.Create(ev);
                 if (res==false)
                 {
                     return new HttpResponseMessage(System.Net.HttpStatusCode.NotFound);
@@ -83,11 +83,11 @@ namespace TodoApi.Controllers
 
         [HttpPost]
         [Route("Update")]
-        public HttpResponseMessage Update(EventDto ev)
+        public async Task<HttpResponseMessage> Update(EventDto ev)
         {
             try
             {
-                var res = EventService.Update(ev);
+                var res = await EventService.Update(ev);
                 if (res == false)
                 {
                     return new HttpResponseMessage(System.Net.HttpStatusCode.NotFound);
@@ -103,11 +103,11 @@ namespace TodoApi.Controllers
 
         [HttpPost]
         [Route("Delete")]
-        public HttpResponseMessage Delete(int id)
+        public async Task<HttpResponseMessage> Delete(int id)
         {
             try
             {
-                var res = EventService.Delete(id);
+                var res = await EventService.Delete(id);
                 if (res == false)
                 {
                     return new HttpResponseMessage(System.Net.HttpStatusCode.NotFound);

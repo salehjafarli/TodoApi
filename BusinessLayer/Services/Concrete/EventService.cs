@@ -18,13 +18,13 @@ namespace BusinessLayer.Services.Concrete
         {
             this.repo = repo;
         }
-        public bool Create(EventDto evn)
+        public async Task<bool> Create(EventDto evn)
         {
             try
             {
                 var mapper = new AutoMapper<EventDto, Event>();
                 Event ev = mapper.Map(evn);
-                return repo.EventRepository.CreateAsync(ev);
+                return await repo.EventRepository.CreateAsync(ev);
             }
             catch (Exception)
             {
@@ -34,34 +34,34 @@ namespace BusinessLayer.Services.Concrete
             
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            return repo.EventRepository.DeleteAsync(id);
+            return await repo.EventRepository.DeleteAsync(id);
         }
 
-        public List<EventDto> GetAll()
+        public async Task<List<EventDto>> GetAll()
         {
-            var list = repo.EventRepository.GetAllAsync().Result;
+            var list = await repo.EventRepository.GetAllAsync();
             var mapper = new AutoMapper<Event, EventDto>();
             List<EventDto> res = list.Select(x => mapper.Map(x)).ToList();
             return res;
 
         }
 
-        public EventDto GetById(int id)
+        public async Task<EventDto> GetById(int id)
         {
-            Event e = repo.EventRepository.GetByIdAsync(id).Result;
+            Event e =await repo.EventRepository.GetByIdAsync(id);
             var mapper = new AutoMapper<Event, EventDto>();
             return mapper.Map(e);
         }
 
-        public bool Update(EventDto evn)
+        public async Task<bool> Update(EventDto evn)
         {
             try
             {
                 var mapper = new AutoMapper<EventDto, Event>();
                 Event ev = mapper.Map(evn);
-                return repo.EventRepository.UpdateAsync(ev);
+                return await repo.EventRepository.UpdateAsync(ev);
             }
             catch (Exception)
             {

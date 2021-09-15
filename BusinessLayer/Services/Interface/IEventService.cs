@@ -9,10 +9,10 @@ namespace BusinessLayer.Services.Interface
 {
     public interface IEventService
     {
-        EventDto GetById(int id);
-        List<EventDto> GetAll();
-        bool Create(EventDto evn);
-        bool Update(EventDto evn);
-        bool Delete(int id);
+        Task<EventDto> GetById(int id);
+        Task<List<EventDto>> GetAll();
+        Task<bool> Create(EventDto evn);
+        Task<bool> Update(EventDto evn);
+        Task<bool> Delete(int id);
     }
 }

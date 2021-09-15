@@ -14,35 +14,35 @@ namespace DAL.Repos.EFCoreRepository.Implementation
         {
 
         }
-        public bool CreateAsync(Event evn)
+        public Task<bool> CreateAsync(Event evn)
         {
             try
             {
                 var x = dBContext.Events.Add(evn).Entity;
                 dBContext.SaveChangesAsync();
-                return true;
+                return Task.FromResult(true);
             }
             catch (Exception)
             {
 
-                return false;
+                return Task.FromResult(false);
             }
             
         }
 
-        public bool DeleteAsync(int id)
+        public Task<bool> DeleteAsync(int id)
         {
             try
             {
                 Event e = dBContext.Events.FirstOrDefault(x => x.Id == id);
                 e.isDeleted = true;
                 dBContext.SaveChangesAsync();
-                return true;
+                return Task.FromResult(true);
             }
             catch (Exception)
             {
 
-                return false;
+                return Task.FromResult(false);
             }
             
             
@@ -58,18 +58,18 @@ namespace DAL.Repos.EFCoreRepository.Implementation
             return Task.FromResult(dBContext.Events.FirstOrDefault(x => x.Id == id && x.isDeleted == false));
         }
 
-        public bool UpdateAsync(Event evn)
+        public Task<bool> UpdateAsync(Event evn)
         {
             try
             {
                 Event e = dBContext.Events.FirstOrDefault(x => x.Id == evn.Id);
                 dBContext.Entry(e).CurrentValues.SetValues(evn);
                 dBContext.SaveChangesAsync();
-                return true;
+                return Task.FromResult(true);
             }
             catch (Exception)
             {
-                return false;
+                return Task.FromResult(false);
             }
             
 
