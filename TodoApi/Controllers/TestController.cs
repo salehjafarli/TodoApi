@@ -1,9 +1,13 @@
-﻿using DAL;
-using DAL.Entity;
-using DAL.Repos.Implementation;
-using DAL.Repos.Interface;
+﻿using BusinessLayer.Services.Interface;
+using DAL;
+using DAL.Entities;
+using DAL.Repos.Abstraction;
+using DAL.Repos.Abstraction.Interfaces;
+using DAL.Repos.EFCoreRepository;
+using DAL.Repos.EFCoreRepository.Implementation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,18 +19,19 @@ namespace TodoApi.Controllers
     [ApiController]
     public class TestController : ControllerBase
     {
-        public readonly Context context;
-        public TestController(Context context)
+        public readonly IEventService service;
+        public TestController(IEventService service)
         {
-            this.context = context;
+             this.service = service;
         }
         [HttpGet]
         public IActionResult get()
         {
-            //IEventRepository a = new EventRepository(context);
-            //Event e = new Event {Id = 105, Name = "asd", Description = "asfasf", StartDate = DateTime.Now,EndDate = DateTime.Now.AddMinutes(20),isDeleted = false };
-            //var x =  a.CreateEventAsync(e);
-            //return Ok(x.Result);
+            //IRepository rep = new EFCoreRepository(context as TodoDBContext);
+            Event e = new Event {Name = "asd", Description = "asfasf", StartDate = DateTime.Now,EndDate = DateTime.Now.AddMinutes(20),isDeleted = false };
+            var x = service.GetById(1);
+            return Ok(x);
+
         }
     }
 }

@@ -9,9 +9,15 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL.Repos.Abstraction;
+using DAL.Repos.EFCoreRepository;
+using BusinessLayer.Services.Interface;
+using BusinessLayer.Services.Concrete;
 
 namespace TodoApi
 {
@@ -27,7 +33,11 @@ namespace TodoApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<Context>();
+            services.AddDbContext<TodoDBContext>(opts =>
+            opts.UseNpgsql(Configuration["ConnectionStrings:Context"]));
+            //services.AddScoped<DbContext, TodoDBContext>();
+            services.AddScoped<IRepository, EFCoreRepository>();
+            services.AddScoped<IEventService, EventService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
